@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Roblox Robux Generator</title>
+    <meta name="description" content="Roblox Robux Generator"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background: url('https://cdn6.aptoide.com/imgs/f/a/d/fad34f1816a2f5d7ee8b72f9e24b4d93.png') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            color: white;
+            text-align: center;
+        }
+        .logo {
+            margin: 20px auto;
+            width: 270px;
+            max-width: 90%;
+            animation: pulse1 1s ease-in infinite;
+        }
+        @keyframes pulse1 {0%,100%{transform:scale(1);}50%{transform:scale(1.05);}}
+
+        .main {
+            backdrop-filter: blur(60px);
+            -webkit-backdrop-filter: blur(60px);
+            width: 90%;
+            max-width: 650px;
+            margin: 50px auto 0;
+            padding: 20px;
+            border-radius: 45px;
+            border: 1px solid white;
+            box-shadow: 0 0 30px rgba(255,100,100,0.8);
+            animation: neon 1s ease-in infinite;
+        }
+        @keyframes neon {
+            0%,100% {box-shadow: 0 0 10px #ff0004, 0 0 20px #f7616d;}
+            50% {box-shadow: 0 0 20px #ff0004, 0 0 40px #ffd64c;}
+        }
+
+        .step1-text {
+            font-size: 26px;
+            margin: 20px 0;
+            animation: bounceIn 0.5s;
+        }
+        @keyframes bounceIn {
+            0% {opacity:0; transform:scale(0.3);}
+            50% {opacity:0.9; transform:scale(1.1);}
+            80% {opacity:1; transform:scale(0.89);}
+            100% {opacity:1; transform:scale(1);}
+        }
+
+        .inputbox {
+            position: relative;
+            width: 90%;
+            max-width: 450px;
+            height: 90px;
+            margin: 20px auto;
+        }
+        .u-i {
+            width: 100%;
+            height: 100%;
+            padding: 0 20px 0 70px;
+            border-radius: 30px;
+            border: none;
+            background: #ff0004;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .username-icon {
+            position: absolute;
+            left: 15px;
+            top: 22px;
+            width: 40px;
+            filter: invert(90%);
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 15px;
+            margin: 20px;
+        }
+        .platform, .selectedPlatform {
+            height: 80px;
+            border-radius: 40px;
+            background: #ff0004;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(255,0,4,0.6);
+        }
+        .selectedPlatform {
+            background: #ff0004;
+            box-shadow: 0 0 30px #ffd64c;
+        }
+
+        .protection {
+            display: block;
+            margin: 20px 0;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .checkmark {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(#ff0004, #f7616d);
+            border-radius: 50%;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        .protection input:checked ~ .checkmark:after {
+            content: "";
+            display: block;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            transform: rotate(45deg);
+            margin: 6px 0 0 9px;
+        }
+
+        .bnt, .bnt2, .bnt3 {
+            width: 90%;
+            max-width: 300px;
+            padding: 15px;
+            margin: 20px auto;
+            border-radius: 40px;
+            background: #ff0004;
+            color: white;
+            font-size: 26px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(255,0,4,0.8);
+        }
+        .bnt:hover, .bnt2:hover, .bnt3:hover {
+            animation: pulse 0.5s infinite;
+            box-shadow: 0 0 40px #ffd64c;
+        }
+        @keyframes pulse {0%,100%{transform:scale(1);}50%{transform:scale(0.95);}}
+
+        .seaching-text {font-size: 28px;margin: 30px 0;}
+        .searching-box {
+            width: 90%;
+            max-width: 300px;
+            margin: 20px auto;
+            padding: 15px;
+            background: #ff0004;
+            border-radius: 45px;
+            font-size: 32px;
+            box-shadow: 0 0 30px rgba(255,0,4,0.8);
+        }
+        .searching-platform {
+            width: 80px;
+            height: 80px;
+            margin: 30px auto;
+            animation: pulse 1s infinite;
+        }
+
+        .userfound-text {
+            font-size: 30px;
+            font-weight: bold;
+            color: #ffd64c;
+            text-shadow: 0 0 20px #ff0004;
+        }
+
+        .SelectedAmount-box {
+            width: 90%;
+            max-width: 300px;
+            margin: 30px auto;
+            padding: 20px;
+            background: #ff0004;
+            border-radius: 40px;
+        }
+        .robux-Amount, .robux-Amount-Selected {
+            width: 90%;
+            margin: 15px auto;
+            padding: 12px;
+            background: #ff0004;
+            border-radius: 40px;
+            border: 2px solid #fff;
+        }
+        .robux-Amount-Selected {
+            background: #ff0004;
+            border: 4px solid #ffd64c;
+            box-shadow: 0 0 30px #ffd64c;
+        }
+
+        .main3 {
+            width: 90%;
+            max-width: 400px;
+            margin: 60px auto;
+            padding: 30px;
+            border-radius: 45px;
+            backdrop-filter: blur(60px);
+            border: 1px solid white;
+            animation: neon 1s infinite;
+        }
+        .pro-bg {
+            width: 80%;
+            height: 15px;
+            background: #666;
+            border-radius: 8px;
+            margin: 20px auto;
+        }
+        .pro-bar {
+            height: 15px;
+            background: #ffd64c;
+            border-radius: 8px;
+            width: 0%;
+            transition: width 1s;
+        }
+
+        .main4 {
+            width: 200px;
+            height: 150px;
+            margin: -280px auto 0;
+            padding: 20px;
+            border-radius: 45px;
+            backdrop-filter: blur(15px);
+            border: 1px solid white;
+            animation: neon 1s infinite;
+        }
+        .robuxgen {
+            font-size: 28px;
+            font-weight: 900;
+            background: linear-gradient(#ff0004, #f7616d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .main5 {
+            width: 90%;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 45px;
+            backdrop-filter: blur(60px);
+            border: 1px solid white;
+            animation: neon 1s infinite;
+        }
+        .lastStep-card {
+            width: 200px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 45px;
+            border: 5px solid #ffd64c;
+            box-shadow: 0 0 40px #ffd64c;
+            background: rgba(0,0,0,0.5);
+        }
+
+        @media (max-width: 680px) {
+            .main, .main3, .main5 {width: 95%;padding: 15px;}
+            .u-i {font-size: 20px;height: 80px;}
+            .grid-container {grid-template-columns: repeat(2, 1fr);}
+            .bnt, .bnt2, .bnt3 {font-size: 22px;padding: 12px;}
+        }
+    </style>
+</head>
+<body>
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Roblox_logo_2015.png" class="logo">
+
+<div class="main" id="main">
+    <div class="step1" id="step1">
+        <div class="step1-text"><b>Please enter your Roblox Username or ID and select your platform.</b></div>
+        <div class="inputbox">
+            <img src="https://d13pxqgp3ixdbh.cloudfront.net/uploads/1636471537cc9c306f7c389c185189bf3daf7260c1.png" class="username-icon">
+            <input class="u-i" placeholder="Username/ID" id="uid">
+        </div>
+
+        <div class="grid-container">
+            <div class="platform selectedPlatform" onclick="selectPlatform(this, 'iOS')">
+                <img src="https://i.imgur.com/D93ugnx.png" width="60">
+            </div>
+            <div class="platform" onclick="selectPlatform(this, 'Android')">
+                <img src="https://i.imgur.com/jCPVyiX.png" width="60">
+            </div>
+            <div class="platform" onclick="selectPlatform(this, 'Xbox')">
+                <img src="https://i.imgur.com/ERPgVhu.png" width="60">
+            </div>
+            <div class="platform" onclick="selectPlatform(this, 'Windows')">
+                <img src="https://i.imgur.com/KWPkKfN.png" width="60">
+            </div>
+        </div>
+
+        <label class="protection">Encrypted Protection
+            <input type="checkbox" checked>
+            <span class="checkmark"></span>
+        </label>
+
+        <div class="bnt" onclick="proStep1()">Proceed</div>
+    </div>
+
+    <div class="step2" id="step2" style="display:none">
+        <div class="seaching-text">Searching User...</div>
+        <div class="searching-box" id="search-name">Searching...</div>
+        <div class="searching-platform">
+            <img src="https://i.imgur.com/D93ugnx.png" width="60" id="img-platform">
+        </div>
+    </div>
+
+    <div class="step3" id="step3" style="display:none">
+        <div class="userfound-text">USER FOUND!</div>
+        <img src="https://d13pxqgp3ixdbh.cloudfront.net/uploads/1636472786ee1905a53e0b903bb72600a288d20d03.png" width="150">
+    </div>
+</div>
+
+<div class="main" id="main2" style="display:none">
+    <div class="step1-text"><b>Please select the amount of Robux</b></div>
+
+    <div class="SelectedAmount-box">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Robux_2019_Logo_gold.svg/1883px-Robux_2019_Logo_gold.svg.png" width="60">
+        <div style="font-size:28px;font-weight:900;" id="selected-robux-text">1000</div>
+        <span>Robux</span>
+
+        <div class="robux-Amount-Selected" onclick="selectAmount(this, 1000)">1 000 Robux</div>
+        <div class="robux-Amount" onclick="selectAmount(this, 3000)">3 000 Robux</div>
+        <div class="robux-Amount" onclick="selectAmount(this, 5000)">5 000 Robux</div>
+        <div class="robux-Amount" onclick="selectAmount(this, 9999)">9 999 Robux</div>
+    </div>
+
+    <div class="bnt2" onclick="proStep2()">Proceed</div>
+</div>
+
+<div class="main3" id="main3" style="display:none">
+    <img src="https://d13pxqgp3ixdbh.cloudfront.net/uploads/1635653021ac61a7aa31f58b94c30339f142fa4242.png" width="150" style="filter:invert(40%);">
+    <div class="step1-text" id="loading-step">Loading...</div>
+    <div class="pro-bg"><div class="pro-bar" id="pro-bar"></div></div>
+
+    <div class="main4" id="robux-gen" style="display:none">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Robux_2019_Logo_gold.svg/1883px-Robux_2019_Logo_gold.svg.png" width="60">
+        <div class="robuxgen" id="robuxgen">0</div>
+        <span id="genname" style="font-size:22px;font-weight:900;"></span>
+    </div>
+</div>
+
+<div class="main5" id="main5" style="display:none">
+    <div class="lastStep-text"><b>Last Step</b></div>
+    <div style="font-size:18px;margin:20px auto;max-width:90%;">
+        Hello <span id="lastStep-name" style="color:#ffd64c;font-weight:700;"></span>!<br>
+        <span id="lastStep-robux" style="color:#ffd64c;font-weight:700;"></span> will be added to your account!<br><br>
+        Please complete verification below.
+    </div>
+
+    <div class="lastStep-card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Robux_2019_Logo_gold.svg/1883px-Robux_2019_Logo_gold.svg.png" width="70">
+        <div class="robuxgen" id="lastStep-robux2">0</div>
+        <span style="font-size:22px;font-weight:900;">Robux</span>
+    </div>
+
+    <!-- Content Locker -->
+    <div class="bnt3" onclick="window.open('https://hubverify.com/cl/?o=694e5d9225c14', '_blank')">
+        <b>Verify Now</b>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+let robuxvalue = 1000;
+let username = "";
+
+function selectPlatform(el, platform) {
+    document.querySelectorAll('.platform, .selectedPlatform').forEach(e => {
+        e.classList.remove('selectedPlatform');
+        e.classList.add('platform');
+    });
+    el.classList.add('selectedPlatform');
+    document.getElementById("img-platform").src = el.querySelector('img').src;
+}
+
+function selectAmount(el, value) {
+    robuxvalue = value;
+    document.getElementById("selected-robux-text").innerHTML = value;
+
+    document.querySelectorAll('.robux-Amount, .robux-Amount-Selected').forEach(e => {
+        e.classList.remove('robux-Amount-Selected');
+        e.classList.add('robux-Amount');
+    });
+    el.classList.add('robux-Amount-Selected');
+}
+
+function proStep1() {
+    username = document.getElementById("uid").value.trim();
+    if (username === "") {
+        document.getElementById("uid").style.boxShadow = "0 0 15px red";
+        return;
+    }
+
+    document.getElementById("step1").style.display = "none";
+    document.getElementById("step2").style.display = "block";
+    document.getElementById("search-name").innerHTML = username;
+
+    setTimeout(() => {
+        document.getElementById("step2").style.display = "none";
+        document.getElementById("step3").style.display = "block";
+
+        setTimeout(() => {
+            document.getElementById("main").style.display = "none";
+            document.getElementById("main2").style.display = "block";
+        }, 2000);
+    }, 3000);
+}
+
+function proStep2() {
+    document.getElementById("main2").style.display = "none";
+    document.getElementById("main3").style.display = "block";
+
+    let step = 0;
+    const interval = setInterval(() => {
+        step++;
+        if (step === 1) {
+            document.getElementById("loading-step").innerHTML = "Getting ready...";
+            document.getElementById("pro-bar").style.width = "30%";
+        } else if (step === 3) {
+            document.getElementById("loading-step").innerHTML = `Adding \( {robuxvalue} Robux to <b> \){username}</b>`;
+            document.getElementById("pro-bar").style.width = "60%";
+            document.getElementById("robux-gen").style.display = "block";
+            document.getElementById("genname").innerHTML = username;
+
+            let current = 0;
+            const addInt = setInterval(() => {
+                current += Math.floor(Math.random() * 80) + 20;
+                if (current >= robuxvalue) {
+                    current = robuxvalue;
+                    document.getElementById("robuxgen").innerHTML = robuxvalue;
+                    clearInterval(addInt);
+
+                    setTimeout(() => {
+                        document.getElementById("pro-bar").style.width = "98%";
+                        document.getElementById("loading-step").innerHTML = "Finalizing...";
+
+                        setTimeout(() => {
+                            document.getElementById("main3").style.display = "none";
+                            document.getElementById("main5").style.display = "block";
+                            document.getElementById("lastStep-name").innerHTML = username;
+                            document.getElementById("lastStep-robux").innerHTML = robuxvalue + " Robux";
+                            document.getElementById("lastStep-robux2").innerHTML = robuxvalue;
+                        }, 1500);
+                    }, 1000);
+                }
+                document.getElementById("robuxgen").innerHTML = current;
+            }, 50);
+        }
+    }, 2000);
+}
+</script>
+
+</body>
+  </html>
